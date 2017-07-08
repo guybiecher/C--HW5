@@ -22,7 +22,8 @@ namespace B17_Ex05
             Color.White
         };
 
-        public List<Color> Colors { get => m_Colors; set => m_Colors = value; }
+        public List<Color> Colors { get => m_Colors;}
+        public Dictionary<Color, Button> Buttons { get => m_Buttons;}
 
         public ColorsCollectionForm()
         {

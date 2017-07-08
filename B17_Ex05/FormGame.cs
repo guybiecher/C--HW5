@@ -18,6 +18,7 @@ namespace B17_Ex05
 
         private const int k_NumberOfButtons = 4; 
         private InitialForm m_FormLogin = new InitialForm();
+        private ColorsCollectionForm m_ColorsCollectionForm = new ColorsCollectionForm();
         private List<List<Button>> m_GameButtons = new List<List<Button>>();
         private Button m_CurrentSelectionButton = null;
 
@@ -99,14 +100,20 @@ namespace B17_Ex05
 
         private void buttonShowColorsPanel_Click(object sender, EventArgs e)
         {
-            ColorsCollectionForm colorsCollectionForm = new ColorsCollectionForm();
             m_CurrentSelectionButton = sender as Button;
-            colorsCollectionForm.ShowDialog();
+        
+            foreach (KeyValuePair<Color,Button> colorButton in m_ColorsCollectionForm.Buttons)
+            {
+                colorButton.Value.Click += new EventHandler(buttonSelectedColor_Click);
+            }
+
+            m_ColorsCollectionForm.ShowDialog();
         }
 
         private void buttonSelectedColor_Click(object sender, EventArgs e)
         {
-
+            m_ColorsCollectionForm.Close();
+            m_CurrentSelectionButton.BackColor = (sender as Button).BackColor;
         }
 
     }
