@@ -26,7 +26,8 @@ namespace B17_Ex05
             Color.White
         };
 
-        public List<Color> Colors { get => m_Colors; set => m_Colors = value; }
+        public List<Color> Colors { get => m_Colors; }
+        public Dictionary<Color, Button> Buttons { get => m_Buttons; }
 
         public ColorsCollectionForm()
         {
@@ -45,13 +46,13 @@ namespace B17_Ex05
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(260, 130);
 
-            foreach (KeyValuePair<Color, Button> pair in m_Buttons)
+            foreach (KeyValuePair<Color, Button> pair in Buttons)
             {
                 this.Controls.Add(pair.Value);
             }
 
-            this.Name = "Colors Collection";
-            this.Text = "Colors Collection";
+            this.Name = "ColorsCollection";
+            this.Text = "Pick A Color:";
             this.ResumeLayout(false);
         }
 
@@ -61,8 +62,8 @@ namespace B17_Ex05
             foreach (Color color in Colors)
             {
                 Button currentButton = InitButton(color);
-                currentButton.Location = setButtonLocation(i);
-                m_Buttons.Add(color, currentButton);
+                currentButton.Location = SetButtonLocation(i);
+                Buttons.Add(color, currentButton);
                 i++;
             }
 
@@ -80,7 +81,7 @@ namespace B17_Ex05
             };
         }
 
-        private Point setButtonLocation(int i_Index)
+        private Point SetButtonLocation(int i_Index)
         {
             Point point;
 
@@ -93,9 +94,7 @@ namespace B17_Ex05
                 i_Index -= 4;
                 point = new Point((k_StartX + i_Index * k_ButtonsMargin), (k_StartY + k_ButtonsMargin));
             }
-
             return point;
         }
-
     }
 }
