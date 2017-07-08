@@ -6,6 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+SandBox1/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
