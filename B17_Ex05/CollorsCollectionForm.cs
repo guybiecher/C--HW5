@@ -10,26 +10,27 @@ namespace B17_Ex05
 {
     class ColorsCollectionForm : Form
     {
-        private Button m_ButtonPink;
-        private Button m_ButtonRed;
-        private Button m_ButtonGreen;
-        private Button m_ButtonLightBlue;
-        private Button m_ButtonBlue;
-        private Button m_ButtonYellow;
-        private Button m_ButtonBrown;
-        private Button m_ButtonWhite;
+        private const int k_StartX = 12;
+        private const int k_StartY = 12;
+        private const int k_ButtonSize = 50;
+        private const int k_ButtonsMargin = k_ButtonSize + 10;
+        private Dictionary<Color, Button> m_Buttons;
+        private List<Color> m_Colors = new List<Color> {
+            Color.HotPink,
+            Color.Red,
+            Color.Green,
+            Color.LightBlue,
+            Color.Blue,
+            Color.Yellow,
+            Color.Brown,
+            Color.White
+        };
+
+        public List<Color> Colors { get => m_Colors; set => m_Colors = value; }
 
         public ColorsCollectionForm()
         {
-            m_ButtonPink = new Button();
-            m_ButtonRed = new Button();
-            m_ButtonGreen = new Button();
-            m_ButtonLightBlue = new Button();
-            m_ButtonBlue = new Button();
-            m_ButtonYellow = new Button();
-            m_ButtonBrown = new Button();
-            m_ButtonWhite = new Button();
-
+            m_Buttons = new Dictionary<Color, Button>();
             this.InitColorsButtons();
             this.InitForm();
 
@@ -42,15 +43,13 @@ namespace B17_Ex05
             this.StartPosition = FormStartPosition.CenterScreen;
             this.AutoScaleDimensions = new SizeF(8F, 16F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(276, 132);
-            this.Controls.Add(this.m_ButtonPink);
-            this.Controls.Add(this.m_ButtonRed);
-            this.Controls.Add(this.m_ButtonGreen);
-            this.Controls.Add(this.m_ButtonLightBlue);
-            this.Controls.Add(this.m_ButtonBlue);
-            this.Controls.Add(this.m_ButtonYellow);
-            this.Controls.Add(this.m_ButtonBrown);
-            this.Controls.Add(this.m_ButtonWhite);
+            this.ClientSize = new Size(260, 130);
+
+            foreach (KeyValuePair<Color, Button> pair in m_Buttons)
+            {
+                this.Controls.Add(pair.Value);
+            }
+
             this.Name = "Colors Collection";
             this.Text = "Colors Collection";
             this.ResumeLayout(false);
@@ -58,47 +57,44 @@ namespace B17_Ex05
 
         private void InitColorsButtons()
         {
-            /* m_ButtonPink */
-            InitButton(Color.Pink, "Pink", m_ButtonPink);
-            this.m_ButtonPink.Location = new Point(12, 12);
-
-            /* m_ButtonRed */
-            InitButton(Color.Red, "Red", m_ButtonRed);
-            this.m_ButtonRed.Location = new Point(76, 12);
-
-            /* m_ButtonGreen */
-            InitButton(Color.Green, "Green", m_ButtonGreen);
-            this.m_ButtonGreen.Location = new Point(140, 12);
-
-            /* m_ButtonLightBlue */
-            InitButton(Color.LightBlue, "LightBlue", m_ButtonLightBlue);
-            this.m_ButtonLightBlue.Location = new Point(204, 12);
-
-            /* m_ButtonBlue */
-            InitButton(Color.Blue, "Blue", m_ButtonBlue);
-            this.m_ButtonBlue.Location = new Point(12, 70);
-
-            /* m_ButtonYellow */
-            InitButton(Color.Yellow, "Yellow", m_ButtonYellow);
-            this.m_ButtonYellow.Location = new Point(76, 70);
-
-            /* m_ButtonBrown */
-            InitButton(Color.Brown, "Brown", m_ButtonBrown);
-            this.m_ButtonBrown.Location = new Point(140, 70);
-
-            /* m_ButtonWhite */
-            InitButton(Color.White, "White", m_ButtonWhite);
-            this.m_ButtonWhite.Location = new Point(204, 70);
+            int i = 0;
+            foreach (Color color in Colors)
+            {
+                Button currentButton = InitButton(color);
+                currentButton.Location = setButtonLocation(i);
+                m_Buttons.Add(color, currentButton);
+                i++;
+            }
 
         }
 
-        private void InitButton(Color i_Color, String i_Name, Button i_Button)
+        private Button InitButton(Color i_Color)
         {
-            i_Button.Name = i_Name;
-            i_Button.Size = new Size(58, 52);
-            i_Button.TabIndex = 0;
-            i_Button.BackColor = i_Color;
-            i_Button.UseVisualStyleBackColor = true;
+            return new Button()
+            {
+                Name = i_Color.ToString(),
+                Size = new Size(k_ButtonSize, k_ButtonSize),
+                TabIndex = 0,
+                BackColor = i_Color,
+                UseVisualStyleBackColor = true
+            };
+        }
+
+        private Point setButtonLocation(int i_Index)
+        {
+            Point point;
+
+            if (i_Index < 4)
+            {
+                point = new Point((k_StartX + (i_Index * k_ButtonsMargin)), k_StartY);
+            }
+            else
+            {
+                i_Index -= 4;
+                point = new Point((k_StartX + i_Index * k_ButtonsMargin), (k_StartY + k_ButtonsMargin));
+            }
+
+            return point;
         }
 
     }
