@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -61,7 +57,7 @@ namespace B17_Ex05
             foreach (Color color in Colors)
             {
                 Button currentButton = InitButton(color);
-                currentButton.Location = setButtonLocation(i);
+                currentButton.Location = SetButtonLocation(i);
                 m_Buttons.Add(color, currentButton);
                 i++;
             }
@@ -80,7 +76,7 @@ namespace B17_Ex05
             };
         }
 
-        private Point setButtonLocation(int i_Index)
+        private Point SetButtonLocation(int i_Index)
         {
             Point point;
 
@@ -93,7 +89,6 @@ namespace B17_Ex05
                 i_Index -= 4;
                 point = new Point((k_StartX + i_Index * k_ButtonsMargin), (k_StartY + k_ButtonsMargin));
             }
-
             return point;
         }
 
