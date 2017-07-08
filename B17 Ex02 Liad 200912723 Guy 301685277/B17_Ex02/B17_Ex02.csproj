@@ -57,5 +57,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\B17_Ex05\B17_Ex05.csproj">
+      <Project>{e3612a9e-6e07-4a35-9363-7e5206f0a58b}</Project>
+      <Name>B17_Ex05</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

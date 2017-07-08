@@ -11,10 +11,13 @@ namespace B17_Ex05
         public event EventHandler UserSelection;
 
         private const int k_ButtonSize = 50;
+        private const int k_FeedbackBtnSize = 15;
         private const int k_ButtonMargin = k_ButtonSize + 10;
         private const int k_LabelMargin = k_ButtonSize + 10;
         private const int k_StartXLocation = 12;
         private const int k_StartYLocation = 12;
+        private const int k_FeedbackBtnMargin = 4;
+
         private const string k_ButtonId = "button-{0}.{1}";
         private const int k_NumberOfButtons = 4; 
 
@@ -55,10 +58,13 @@ namespace B17_Ex05
             // 
             // FormGame
             // 
-            this.ClientSize = new Size(349, 286);
+            this.AutoSize = true;
             this.Name = "FormGame";
             this.ResumeLayout(false);
-            InitBoard(FormLogin.GetNumberOfChances());
+            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            InitBoard(m_FormLogin.GetNumberOfChances());
+
 
         }
 
@@ -68,6 +74,9 @@ namespace B17_Ex05
             {
                 int YLocation = k_StartYLocation + i * k_LabelMargin;
                 m_GameButtons.Add(InitLine(i, YLocation));
+                CreateArrowButton(YLocation);
+                CreateFeedbackButtons(YLocation);
+
             }
             EnableButtionLine(m_GameButtons[0]);
         }
@@ -83,24 +92,24 @@ namespace B17_Ex05
                 Controls.Add(button);
                 buttonList.Add(button);
             }
+
             return buttonList;
-            
         }
 
-        private Button InitButton(int i_LineNumber , int i_ButtonNumber)
+        private Button InitButton(int i_LineNumber, int i_ButtonNumber)
         {
             Button button = new Button()
             {
                 Name = string.Format(k_ButtonId, i_ButtonNumber, i_ButtonNumber),
                 Size = new Size(k_ButtonSize, k_ButtonSize),
-                Enabled = false               
+                Enabled = false
             };
             return button;
         }
 
         private void EnableButtionLine(List<Button> i_ListButton)
         {
-            foreach(Button button in i_ListButton)
+            foreach (Button button in i_ListButton)
             {
                 button.Enabled = true;
                 button.Click += new EventHandler(buttonShowColorsPanel_Click);
@@ -141,5 +150,40 @@ namespace B17_Ex05
             
         }
 
+        private void CreateFeedbackButtons(int i_HeightReference)
+        {
+            Button currentButton;
+            i_HeightReference += k_FeedbackBtnSize + (3 * k_FeedbackBtnMargin);
+            for (int i = 0; i < 4; i++)
+            {
+                currentButton = new Button();
+                currentButton.Size = new Size(k_FeedbackBtnSize, k_FeedbackBtnSize);
+
+                if (i < 2)
+                {
+                    currentButton.Location = new Point((5 * k_ButtonMargin) + (i * k_FeedbackBtnSize + (i + 1) * k_FeedbackBtnMargin), i_HeightReference);
+                }
+                else
+                {
+                    currentButton.Location = new Point(
+                        (5 * k_ButtonMargin) + ((i - 2) * k_FeedbackBtnSize + (i - 1) * k_FeedbackBtnMargin), i_HeightReference - k_FeedbackBtnSize - k_FeedbackBtnMargin);
+
+                }
+
+                Controls.Add(currentButton);
+            }
+        }
+
+        private Button CreateArrowButton(int i_HeightReference)
+        {
+            Button arrowButton = new Button();
+            arrowButton.Text = "-->>";
+            arrowButton.Size = new Size(k_ButtonSize, 20);
+            arrowButton.Location = new Point(4 * k_ButtonMargin + 5, i_HeightReference + 15);
+            arrowButton.Enabled = false;
+            Controls.Add(arrowButton);
+
+            return arrowButton;
+        }
     }
 }

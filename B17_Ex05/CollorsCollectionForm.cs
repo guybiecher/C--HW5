@@ -22,8 +22,8 @@ namespace B17_Ex05
             Color.White
         };
 
-        public List<Color> Colors { get => m_Colors;}
-        public Dictionary<Color, Button> Buttons { get => m_Buttons;}
+        public List<Color> Colors { get => m_Colors; }
+        public Dictionary<Color, Button> Buttons { get => m_Buttons; }
 
         public ColorsCollectionForm()
         {
@@ -42,13 +42,13 @@ namespace B17_Ex05
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(260, 130);
 
-            foreach (KeyValuePair<Color, Button> pair in m_Buttons)
+            foreach (KeyValuePair<Color, Button> pair in Buttons)
             {
                 this.Controls.Add(pair.Value);
             }
 
-            this.Name = "Colors Collection";
-            this.Text = "Colors Collection";
+            this.Name = "ColorsCollection";
+            this.Text = "Pick A Color:";
             this.ResumeLayout(false);
         }
 
@@ -92,6 +92,5 @@ namespace B17_Ex05
             }
             return point;
         }
-
     }
 }
