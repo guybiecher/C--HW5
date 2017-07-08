@@ -2,10 +2,9 @@
 {
     class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
-            FormGame color = new FormGame();
-
+            GameManager gameManager = new GameManager();
         }
     }
 }

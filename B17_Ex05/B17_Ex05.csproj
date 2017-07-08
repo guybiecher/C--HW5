@@ -44,7 +44,9 @@
     <Compile Include="FormInitial.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GameManager.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="UserChoicesEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,6 +57,12 @@
     <EmbeddedResource Include="FormGame.resx">
       <DependentUpon>FormGame.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\B17 Ex02 Liad 200912723 Guy 301685277\B17_Ex02\B17_Ex02.csproj">
+      <Project>{1804368a-dbcb-4cea-93bd-28d48e6b9343}</Project>
+      <Name>B17_Ex02</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

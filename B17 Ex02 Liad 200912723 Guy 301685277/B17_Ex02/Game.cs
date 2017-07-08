@@ -4,9 +4,9 @@ using System.Text;
 
 namespace B17_Ex02
 {
-    class Game
+    public class Game
     {
-        protected internal enum CharOptions { A, B, C, D, E, F, G, H };
+        public  enum CharOptions { A, B, C, D, E, F, G, H };
         private enum GuessStatus { CharAndPosition = 'V', CharOnly = 'X', BadChoice = ' ' }
 
         private string m_RandomWord;
