@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace B17_Ex05
 {
-    class CollorsCollectionForm : Form
+    class ColorsCollectionForm : Form
     {
         private Button m_ButtonPink;
         private Button m_ButtonRed;
@@ -19,7 +19,7 @@ namespace B17_Ex05
         private Button m_ButtonBrown;
         private Button m_ButtonWhite;
 
-        public CollorsCollectionForm()
+        public ColorsCollectionForm()
         {
             m_ButtonPink = new Button();
             m_ButtonRed = new Button();
@@ -51,8 +51,8 @@ namespace B17_Ex05
             this.Controls.Add(this.m_ButtonYellow);
             this.Controls.Add(this.m_ButtonBrown);
             this.Controls.Add(this.m_ButtonWhite);
-            this.Name = "Collors Collection";
-            this.Text = "Collors Collection";
+            this.Name = "Colors Collection";
+            this.Text = "Colors Collection";
             this.ResumeLayout(false);
         }
 
