@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
@@ -63,7 +59,7 @@ namespace B17_Ex05
             {
                 Button currentButton = InitButton(color);
                 currentButton.Location = SetButtonLocation(i);
-                Buttons.Add(color, currentButton);
+                m_Buttons.Add(color, currentButton);
                 i++;
             }
 

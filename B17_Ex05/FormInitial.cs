@@ -16,6 +16,7 @@ namespace B17_Ex05
 
         public Button ButtonStartGame { get => m_ButtonStartGame; }
         public Button ButtonNumberOfChances { get => m_ButtonNumberOfChances;}
+        public int NumberOfChances { get => m_NumberOfChances;}
 
         public InitialForm()
         {
@@ -74,7 +75,12 @@ namespace B17_Ex05
         private void m_ButtonNumberOfChances_Click(object sender, EventArgs e)
         {
             m_NumberOfChances++;
-            m_ButtonNumberOfChances.Text = String.Format(k_MessageChancesPattern, m_NumberOfChances % 7 + k_MinStartGame);
+            m_ButtonNumberOfChances.Text = String.Format(k_MessageChancesPattern,NumberOfChances % 7 + k_MinStartGame);
+        }
+
+        public int GetNumberOfChances()
+        {
+            return m_NumberOfChances + k_MinStartGame;
         }
 
     }
