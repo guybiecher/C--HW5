@@ -43,9 +43,11 @@ namespace B17_Ex05
             // 
             // FormGame
             // 
-            this.ClientSize = new Size(349, 286);
+            this.AutoSize = true;
             this.Name = "FormGame";
             this.ResumeLayout(false);
+            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            this.StartPosition = FormStartPosition.CenterScreen;
             InitBoard(m_FormLogin.GetNumberOfChances());
 
 
