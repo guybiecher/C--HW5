@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace B17_Ex05
 
@@ -9,6 +10,7 @@ namespace B17_Ex05
     {
 
         InitialForm m_FormLogin = new InitialForm();
+        List<Label> m_Labels = new List<Label>();
 
         public FormGame()
         {
@@ -19,8 +21,9 @@ namespace B17_Ex05
 
         private void buttonStartGame_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("I Was here");
-            Console.WriteLine(m_FormLogin.ButtonNumberOfChances.Text);
+            InitializeComponent();
+            this.m_FormLogin.Close(); //check if we need to close
+            this.ShowDialog();
         }
 
         private void InitializeComponent()
@@ -34,5 +37,6 @@ namespace B17_Ex05
             this.ResumeLayout(false);
 
         }
+
     }
 }

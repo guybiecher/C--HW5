@@ -59,76 +59,47 @@ namespace B17_Ex05
         private void InitColorsButtons()
         {
             /* m_ButtonPink */
-
+            InitButton(Color.Pink, "Pink", m_ButtonPink);
             this.m_ButtonPink.Location = new Point(12, 12);
-            this.m_ButtonPink.Name = "Pink";
-            this.m_ButtonPink.Size = new Size(58, 52);
-            this.m_ButtonPink.TabIndex = 0;
-            this.m_ButtonPink.BackColor = Color.HotPink;
-            this.m_ButtonPink.UseVisualStyleBackColor = true;
 
             /* m_ButtonRed */
-
+            InitButton(Color.Red, "Red", m_ButtonRed);
             this.m_ButtonRed.Location = new Point(76, 12);
-            this.m_ButtonRed.Name = "Red";
-            this.m_ButtonRed.Size = new Size(58, 52);
-            this.m_ButtonRed.TabIndex = 0;
-            this.m_ButtonRed.BackColor = Color.Red;
-            this.m_ButtonRed.UseVisualStyleBackColor = true;
 
             /* m_ButtonGreen */
-
+            InitButton(Color.Green, "Green", m_ButtonGreen);
             this.m_ButtonGreen.Location = new Point(140, 12);
-            this.m_ButtonGreen.Name = "Green";
-            this.m_ButtonGreen.Size = new Size(58, 52);
-            this.m_ButtonGreen.TabIndex = 0;
-            this.m_ButtonGreen.BackColor = Color.Green;
-            this.m_ButtonGreen.UseVisualStyleBackColor = true;
 
             /* m_ButtonLightBlue */
-
+            InitButton(Color.LightBlue, "LightBlue", m_ButtonLightBlue);
             this.m_ButtonLightBlue.Location = new Point(204, 12);
-            this.m_ButtonLightBlue.Name = "Light Blue";
-            this.m_ButtonLightBlue.Size = new Size(58, 52);
-            this.m_ButtonLightBlue.TabIndex = 0;
-            this.m_ButtonLightBlue.BackColor = Color.LightBlue;
-            this.m_ButtonLightBlue.UseVisualStyleBackColor = true;
 
             /* m_ButtonBlue */
-
+            InitButton(Color.Blue, "Blue", m_ButtonBlue);
             this.m_ButtonBlue.Location = new Point(12, 70);
-            this.m_ButtonBlue.Name = "Blue";
-            this.m_ButtonBlue.Size = new Size(58, 52);
-            this.m_ButtonBlue.TabIndex = 0;
-            this.m_ButtonBlue.BackColor = Color.Blue;
-            this.m_ButtonBlue.UseVisualStyleBackColor = true;
 
             /* m_ButtonYellow */
-
+            InitButton(Color.Yellow, "Yellow", m_ButtonYellow);
             this.m_ButtonYellow.Location = new Point(76, 70);
-            this.m_ButtonYellow.Name = "Yellow";
-            this.m_ButtonYellow.Size = new Size(58, 52);
-            this.m_ButtonYellow.TabIndex = 0;
-            this.m_ButtonYellow.BackColor = Color.Yellow;
-            this.m_ButtonYellow.UseVisualStyleBackColor = true;
 
             /* m_ButtonBrown */
-
+            InitButton(Color.Brown, "Brown", m_ButtonBrown);
             this.m_ButtonBrown.Location = new Point(140, 70);
-            this.m_ButtonBrown.Name = "Brown";
-            this.m_ButtonBrown.Size = new Size(58, 52);
-            this.m_ButtonBrown.TabIndex = 0;
-            this.m_ButtonBrown.BackColor = Color.Brown;
-            this.m_ButtonBrown.UseVisualStyleBackColor = true;
 
             /* m_ButtonWhite */
-
+            InitButton(Color.White, "White", m_ButtonWhite);
             this.m_ButtonWhite.Location = new Point(204, 70);
-            this.m_ButtonWhite.Name = "White";
-            this.m_ButtonWhite.Size = new Size(58, 52);
-            this.m_ButtonWhite.TabIndex = 0;
-            this.m_ButtonWhite.BackColor = Color.White;
-            this.m_ButtonWhite.UseVisualStyleBackColor = true;
+
         }
+
+        private void InitButton(Color i_Color, String i_Name, Button i_Button)
+        {
+            i_Button.Name = i_Name;
+            i_Button.Size = new Size(58, 52);
+            i_Button.TabIndex = 0;
+            i_Button.BackColor = i_Color;
+            i_Button.UseVisualStyleBackColor = true;
+        }
+
     }
 }

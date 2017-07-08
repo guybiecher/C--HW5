@@ -9,9 +9,10 @@ namespace B17_Ex05
     {
         private const int k_MinStartGame = 4;
         private const string k_MessageChancesPattern = "Number of chances: {0}";
+        private int m_NumberOfChances = 0;
+
         private Button m_ButtonNumberOfChances = new Button();
         private Button m_ButtonStartGame = new Button();
-        private int m_NumberOfChances = 0; 
 
         public Button ButtonStartGame { get => m_ButtonStartGame; }
         public Button ButtonNumberOfChances { get => m_ButtonNumberOfChances;}
@@ -71,9 +72,8 @@ namespace B17_Ex05
         }
 
         private void m_ButtonNumberOfChances_Click(object sender, EventArgs e)
-        {;
+        {
             m_NumberOfChances++;
-
             m_ButtonNumberOfChances.Text = String.Format(k_MessageChancesPattern, m_NumberOfChances % 7 + k_MinStartGame);
         }
 

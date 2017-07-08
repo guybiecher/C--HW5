@@ -4,7 +4,7 @@
     {
         public static void Main()
         {
-            FormGame test = new FormGame();
+            FormGame color = new FormGame();
 
         }
     }
