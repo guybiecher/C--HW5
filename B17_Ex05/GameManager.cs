@@ -22,7 +22,6 @@ namespace B17_Ex05
             m_Board.StartGame();
             
             InitMapping();
-            
         }
 
         private void GetNumberOfChancesHandler(int i_NumberOfChances)

@@ -6,89 +6,90 @@ using System.Collections.Generic;
 namespace B17_Ex05
 
 {
+    public delegate void UserNumberOfChoices(int userNumberOfchoices);
+    public delegate void UserSelection(List<Color> userSelection);
+
     public class FormGame : Form
     {
-        private const int k_ButtonSize = 50;
-        private const int k_FeedbackBtnSize = 15;
-        private const int k_ButtonMargin = k_ButtonSize + 10;
-        private const int k_LabelMargin = k_ButtonSize + 10;
-        private const int k_StartXLocation = 12;
-        private const int k_StartYLocation = 12;
-        private const int k_FeedbackBtnMargin = 4;
-
-        private const string k_ButtonId = "button-{0}.{1}";
+        public event UserSelection UserSelection;
+        public event UserNumberOfChoices UserNumberOfChoices;
 
         private const int k_NumberOfButtons = 4;
+        private const int k_StartYLocation = 12;
+        private const int k_RowMargin = 60;
+        private const int k_TopRowMargine = 20;
+
         private InitialForm m_FormLogin = new InitialForm();
+        internal InitialForm FormLogin { get => m_FormLogin; }
         private ColorsCollectionForm m_ColorsCollectionForm = new ColorsCollectionForm();
-        private List<List<Button>> m_GameButtons = new List<List<Button>>();
-        private Button m_CurrentSelectionButton = null;
+        internal ColorsCollectionForm ColorsCollectionForm { get => m_ColorsCollectionForm; }
+
+        private List<Color> m_UserColorsSelection;
+        private Row m_TopRow;
+        private List<BoardRow> m_BoardRows;
+        private Button m_CurrentSelectionButton;
+
+        private int m_CounterSelection = 0;
+        private int m_CurrentLine = 0;
+
 
         public FormGame()
         {
-            m_FormLogin.ButtonStartGame.Click += new EventHandler(ButtonStartGame_Click);
-            m_FormLogin.ShowDialog();
+            m_UserColorsSelection = new List<Color>();
+            m_BoardRows = new List<BoardRow>();
+            FormLogin.ButtonStartGame.Click += new EventHandler(ButtonStartGame_Click);
+        }
+
+        public void StartGame()
+        {
+            FormLogin.ShowDialog();
         }
 
         private void ButtonStartGame_Click(object sender, EventArgs e)
         {
-            this.m_FormLogin.Close();
-            InitializeFormGame();
-            this.ShowDialog();
+            FormLogin.Close();
+            InitializeComponent();
+            ShowDialog();
         }
 
-        private void InitializeFormGame()
+        private void InitializeComponent()
         {
-            this.AutoSize = true;
-            this.Name = "FormGame";
-            this.ResumeLayout(false);
-            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            this.StartPosition = FormStartPosition.CenterScreen;
-            InitializeBoard(m_FormLogin.GetNumberOfChances());
+            AutoSize = true;
+            Name = "FormGame";
+            ResumeLayout(false);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            StartPosition = FormStartPosition.CenterScreen;
+
+            if (UserNumberOfChoices != null)
+            {
+                UserNumberOfChoices.Invoke(m_FormLogin.GetNumberOfChances());
+            }
+
+            InitBoard(m_FormLogin.GetNumberOfChances());
         }
 
-        private void InitializeBoard(int i_NumberOfLines)
+        private void InitBoard(int i_NumberOfLines)
         {
-            Console.WriteLine(i_NumberOfLines);
+            m_TopRow = InitTopRow();
             for (int i = 1; i <= i_NumberOfLines; i++)
             {
-                int YLocation = k_StartYLocation + i * k_LabelMargin;
-                m_GameButtons.Add(InitLine(i, YLocation));
-                CreateArrowButton(YLocation);
-                CreateFeedbackButtons(YLocation);
-
+                int YLocation = k_StartYLocation + i * k_RowMargin + k_TopRowMargine;
+                BoardRow boardrow = new BoardRow(YLocation);
+                AddRowToContolsForm(boardrow.GetAllButtons());
+                m_BoardRows.Add(boardrow);
             }
-
-            EnableButtionLine(m_GameButtons[0]);
+            EnableButtonLine(m_BoardRows[0].ChoiceButtons);
         }
 
-        private List<Button> InitLine(int i_NumberOfLine, int i_YLocation)
+        private void AddRowToContolsForm(List<Button> i_LineButtons)
         {
-            List<Button> buttonList = new List<Button>();
-            for (int i = 0; i < k_NumberOfButtons; i++)
+            foreach (Button button in i_LineButtons)
             {
-                Button button = InitializeButton(i_NumberOfLine, i);
-                int XLocation = k_StartXLocation + i * k_ButtonMargin;
-                button.Location = new Point(XLocation, i_YLocation);
                 Controls.Add(button);
-                buttonList.Add(button);
             }
-
-            return buttonList;
         }
 
-        private Button InitializeButton(int i_LineNumber, int i_ButtonNumber)
-        {
-            Button button = new Button()
-            {
-                Name = string.Format(k_ButtonId, i_ButtonNumber, i_ButtonNumber),
-                Size = new Size(k_ButtonSize, k_ButtonSize),
-                Enabled = false
-            };
-            return button;
-        }
-
-        private void EnableButtionLine(List<Button> i_ListButton)
+        private void EnableButtonLine(List<Button> i_ListButton)
         {
             foreach (Button button in i_ListButton)
             {
@@ -101,57 +102,56 @@ namespace B17_Ex05
         {
             m_CurrentSelectionButton = sender as Button;
 
-            foreach (KeyValuePair<Color, Button> colorButton in m_ColorsCollectionForm.Buttons)
+            foreach (KeyValuePair<Color, Button> colorButton in ColorsCollectionForm.Buttons)
             {
                 colorButton.Value.Click += new EventHandler(ButtonSelectedColor_Click);
             }
-
-            m_ColorsCollectionForm.ShowDialog();
+            ColorsCollectionForm.ShowDialog();
         }
 
-        /**
-         * 
-        **/
         private void ButtonSelectedColor_Click(object sender, EventArgs e)
         {
-            m_ColorsCollectionForm.Close();
+            ColorsCollectionForm.Close();
+            m_CurrentSelectionButton.Enabled = false;
             m_CurrentSelectionButton.BackColor = (sender as Button).BackColor;
-        }
+            m_UserColorsSelection.Add(m_CurrentSelectionButton.BackColor);
 
-        private void CreateFeedbackButtons(int i_HeightReference)
-        {
-            Button currentButton;
-            i_HeightReference += k_FeedbackBtnSize + (3 * k_FeedbackBtnMargin);
-            for (int i = 0; i < 4; i++)
+            m_CounterSelection++;
+
+            if (m_CounterSelection == k_NumberOfButtons)
             {
-                currentButton = new Button();
-                currentButton.Size = new Size(k_FeedbackBtnSize, k_FeedbackBtnSize);
+                Button arrowButton = m_BoardRows[m_CurrentLine].ArrowButton;
+                arrowButton.Click += ButtonArrow_Click;
+                arrowButton.Enabled = true;
 
-                if (i < 2)
-                {
-                    currentButton.Location = new Point((5 * k_ButtonMargin) + (i * k_FeedbackBtnSize + (i + 1) * k_FeedbackBtnMargin), i_HeightReference);
-                }
-                else
-                {
-                    currentButton.Location = new Point(
-                        (5 * k_ButtonMargin) + ((i - 2) * k_FeedbackBtnSize + (i - 1) * k_FeedbackBtnMargin), i_HeightReference - k_FeedbackBtnSize - k_FeedbackBtnMargin);
+            }
 
-                }
-
-                Controls.Add(currentButton);
+            foreach (KeyValuePair<Color, Button> colorButton in ColorsCollectionForm.Buttons)
+            {
+                colorButton.Value.Click -= new EventHandler(ButtonSelectedColor_Click);
             }
         }
 
-        private Button CreateArrowButton(int i_HeightReference)
+        private void ButtonArrow_Click(object sender, EventArgs e)
         {
-            Button arrowButton = new Button();
-            arrowButton.Text = "-->>";
-            arrowButton.Size = new Size(k_ButtonSize, 20);
-            arrowButton.Location = new Point(4 * k_ButtonMargin + 5, i_HeightReference + 15);
-            arrowButton.Enabled = false;
-            Controls.Add(arrowButton);
+            (sender as Button).Enabled = false;
 
-            return arrowButton;
+            if (UserSelection != null)
+            {
+                UserSelection.Invoke(m_UserColorsSelection);
+            }
         }
+
+        private Row InitTopRow()
+        {
+            Row topRow = new Row(k_StartYLocation);
+            foreach (Button button in topRow.ChoiceButtons)
+            {
+                button.BackColor = Color.Black;
+                this.Controls.Add(button);
+            }
+            return topRow;
+        }
+
     }
 }
