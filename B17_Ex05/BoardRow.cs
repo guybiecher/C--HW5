@@ -6,6 +6,7 @@ namespace B17_Ex05
 {
     class BoardRow : Row
     {
+        private const int k_NumOfFeedbackBtns = 4;
         private List<Button> m_FeedBackButtons;
         private Button m_ArrowButton;
         public List<Button> FeedBackButtons { get => m_FeedBackButtons; }
@@ -21,18 +22,18 @@ namespace B17_Ex05
         {
             List<Button> buttons = new List<Button>();
             i_HeightReference += k_FeedbackBtnSize + (3 * k_FeedbackBtnMargin);
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < k_NumOfFeedbackBtns; i++)
             {
                 Button currentButton = new Button();
                 currentButton.Size = new Size(k_FeedbackBtnSize, k_FeedbackBtnSize);
 
                 if (i < 2)
                 {
-                    currentButton.Location = new Point((5 * k_ButtonMargin) + (i * k_FeedbackBtnSize + (i + 1) * k_FeedbackBtnMargin), i_HeightReference);
+                    currentButton.Location = CalcFeedbackBtnTopRowPosition(i, i_HeightReference);
                 }
                 else
                 {
-                    currentButton.Location = new Point((5 * k_ButtonMargin) + ((i - 2) * k_FeedbackBtnSize + (i - 1) * k_FeedbackBtnMargin), i_HeightReference + k_FeedbackBtnSize + k_FeedbackBtnMargin);
+                    currentButton.Location = CalcFeedbackBtnBottomRowPosition(i, i_HeightReference);
                 }
                 buttons.Add(currentButton);
             }
@@ -59,6 +60,26 @@ namespace B17_Ex05
             allButtons.AddRange(m_FeedBackButtons);
 
             return allButtons;
+        }
+
+        private Point CalcFeedbackBtnTopRowPosition(int i_Scalar, int i_HeightReference)
+        {
+            return new Point
+                (
+                    (5 * k_ButtonMargin)
+                    + (i_Scalar * k_FeedbackBtnSize + (i_Scalar + 1) * k_FeedbackBtnMargin),
+                    i_HeightReference
+                );
+        }
+
+        private Point CalcFeedbackBtnBottomRowPosition(int i_Scalar, int i_HeightReference)
+        {
+            return new Point
+                (
+                    (5 * k_ButtonMargin)
+                    + ((i_Scalar - 2) * k_FeedbackBtnSize + (i_Scalar - 1) * k_FeedbackBtnMargin),
+                    i_HeightReference + k_FeedbackBtnSize + k_FeedbackBtnMargin
+                );
         }
     }
 }
