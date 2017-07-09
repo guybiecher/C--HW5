@@ -18,13 +18,12 @@ namespace B17_Ex02
 
         public int AttemptsCounter { get => m_AttemptsCounter; set => m_AttemptsCounter = value; }
         public bool IsWin { get => m_IsWin; set => m_IsWin = value; }
-        public int TotalNumberOfGuesses { get => m_TotalNumberOfGuesses; }
+        public int TotalNumberOfGuesses { get => m_TotalNumberOfGuesses; set => m_TotalNumberOfGuesses = value;}
         public string RandomWord { get => m_RandomWord; }
 
-        public Game(int i_TotalNumberOfGuesses)
+        public Game()
         {
             m_RandomWord = generateRandomWord();
-            m_TotalNumberOfGuesses = i_TotalNumberOfGuesses;
             AttemptsCounter = 0;
             IsWin = false;
         }
