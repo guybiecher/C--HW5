@@ -2,12 +2,9 @@
 {
     class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
-            FormGame color = new FormGame();
-            //ColorsCollectionForm color = new ColorsCollectionForm();
-            //color.ShowDialog();
-
+            GameManager gameManager = new GameManager();
         }
     }
 }

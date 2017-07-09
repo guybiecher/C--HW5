@@ -49,9 +49,8 @@ namespace B17_Ex05
 
         private void InitializeBoard(int i_NumberOfLines)
         {
-            CreateTopRow();
             Console.WriteLine(i_NumberOfLines);
-            for (int i = 0; i < i_NumberOfLines; i++)
+            for (int i = 1; i <= i_NumberOfLines; i++)
             {
                 int YLocation = k_StartYLocation + i * k_LabelMargin;
                 m_GameButtons.Add(InitLine(i, YLocation));
