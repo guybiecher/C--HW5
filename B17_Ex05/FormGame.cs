@@ -17,16 +17,17 @@ namespace B17_Ex05
         private const int k_NumberOfButtons = 4;
         private const int k_StartYLocation = 12;
         private const int k_RowMargin = 60;
+        private const int k_TopRowMargine = 20;
 
         private InitialForm m_FormLogin = new InitialForm();
         internal InitialForm FormLogin { get => m_FormLogin; }
         private ColorsCollectionForm m_ColorsCollectionForm = new ColorsCollectionForm();
         internal ColorsCollectionForm ColorsCollectionForm { get => m_ColorsCollectionForm; }
 
-        private List<Color> m_UserColorsSelection = null;
-
-        private List<BoardRow> m_BoardRows = new List<BoardRow>();
-        private Button m_CurrentSelectionButton = null;
+        private List<Color> m_UserColorsSelection;
+        private Row m_TopRow;
+        private List<BoardRow> m_BoardRows;
+        private Button m_CurrentSelectionButton;
 
         private int m_CounterSelection = 0;
         private int m_CurrentLine = 0;
@@ -34,6 +35,7 @@ namespace B17_Ex05
         public FormGame()
         {
             m_UserColorsSelection = new List<Color>();
+            m_BoardRows = new List<BoardRow>();
             FormLogin.ButtonStartGame.Click += new EventHandler(ButtonStartGame_Click);
         }
 
@@ -67,9 +69,10 @@ namespace B17_Ex05
 
         private void InitBoard(int i_NumberOfLines)
         {
-            for (int i = 0; i < i_NumberOfLines; i++)
+            m_TopRow = InitTopRow();
+            for (int i = 1; i <= i_NumberOfLines; i++)
             {
-                int YLocation = k_StartYLocation + i * k_RowMargin;
+                int YLocation = k_StartYLocation + i * k_RowMargin + k_TopRowMargine;
                 BoardRow boardrow = new BoardRow(YLocation);
                 AddRowToContolsForm(boardrow.GetAllButtons());
                 m_BoardRows.Add(boardrow);
@@ -136,6 +139,17 @@ namespace B17_Ex05
             {
                 UserSelection.Invoke(m_UserColorsSelection);
             }
+        }
+
+        private Row InitTopRow()
+        {
+            Row topRow = new Row(k_StartYLocation);
+            foreach (Button button in topRow.ChoiceButtons)
+            {
+                button.BackColor = Color.Black;
+                this.Controls.Add(button);
+            }
+            return topRow;
         }
 
         public void ExecuteNextStep(List<Color> i_ListResult)
