@@ -35,7 +35,16 @@ namespace B17_Ex05
             string choicesStatus = m_Game.getChoicesStatus(ConvertUserChoicesToGameLogic(i_UserSelection));
             Console.WriteLine(choicesStatus);
             List<Color> resultConvertedToColors = ConvertResultToColor(choicesStatus);
-            m_Board.ExecuteNextStep(resultConvertedToColors);
+
+            if (m_Game.IsWin)
+            {
+                m_Board.ExecuteWinStep(resultConvertedToColors);
+            }
+            else
+            {
+                m_Board.ExecuteNextStep(resultConvertedToColors);
+            }
+
         }
 
         public void InitMapping()
@@ -48,7 +57,6 @@ namespace B17_Ex05
                 m_MappingFromUIToLogic.Add(m_Board.ColorsCollectionForm.Colors[i], currentCharOption);
                 i++;
             }
-
         }
 
         public string ConvertUserChoicesToGameLogic(List<Color> i_UserChoices)

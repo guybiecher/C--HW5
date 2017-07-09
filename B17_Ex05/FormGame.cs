@@ -39,6 +39,7 @@ namespace B17_Ex05
             FormLogin.ButtonStartGame.Click += new EventHandler(ButtonStartGame_Click);
         }
 
+
         public void StartGame()
         {
             FormLogin.ShowDialog();
@@ -152,25 +153,32 @@ namespace B17_Ex05
             return topRow;
         }
 
-        public void ExecuteNextStep(List<Color> i_ListResult)
+        internal void ExecuteNextStep(List<Color> i_ListResult)
         {
-            PaintFeedbackButtons(i_ListResult);
+            List<Button> feedbackButtons = m_BoardRows[m_CurrentLine].FeedBackButtons;
+            PaintRowButtons(i_ListResult, feedbackButtons);
             m_UserColorsSelection = new List<Color>();
             m_CurrentLine++;
             m_CounterSelection = 0;
-            if(m_CurrentLine < m_FormLogin.GetNumberOfChances())
+            if (m_CurrentLine < m_FormLogin.GetNumberOfChances())
             {
                 EnableButtonLine(m_BoardRows[m_CurrentLine].ChoiceButtons);
             }
-        } 
+        }
 
-        private void PaintFeedbackButtons(List<Color> i_ListResult)
+        internal void ExecuteWinStep(List<Color> i_ListResult)
         {
-            List<Button> currentFeedbackButtons = m_BoardRows[m_CurrentLine].FeedBackButtons;
+            PaintRowButtons(m_UserColorsSelection, m_TopRow.ChoiceButtons);
+            PaintRowButtons(i_ListResult, m_BoardRows[m_CurrentLine].FeedBackButtons);  
+        }
+
+
+        private void PaintRowButtons(List<Color> i_ListResult, List<Button> i_Buttons)
+        {
             int i = 0;
-            foreach(Color color in i_ListResult)
+            foreach (Color color in i_ListResult)
             {
-                currentFeedbackButtons[i].BackColor = color;
+                i_Buttons[i].BackColor = color;
                 i++;
             }
         }
