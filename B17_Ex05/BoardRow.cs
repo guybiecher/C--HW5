@@ -21,7 +21,7 @@ namespace B17_Ex05
         private List<Button> CreateFeedbackButtons(int i_HeightReference)
         {
             List<Button> buttons = new List<Button>();
-            i_HeightReference += k_FeedbackBtnSize + (3 * k_FeedbackBtnMargin);
+            i_HeightReference += (k_FeedbackBtnMargin + (k_FeedbackBtnMargin / 2));
             for (int i = 0; i < k_NumOfFeedbackBtns; i++)
             {
                 Button currentButton = new Button();
