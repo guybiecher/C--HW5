@@ -26,35 +26,30 @@ namespace B17_Ex05
 
         public FormGame()
         {
-            m_FormLogin.ButtonStartGame.Click += new EventHandler(buttonStartGame_Click);
+            m_FormLogin.ButtonStartGame.Click += new EventHandler(ButtonStartGame_Click);
             m_FormLogin.ShowDialog();
         }
 
-
-        private void buttonStartGame_Click(object sender, EventArgs e)
+        private void ButtonStartGame_Click(object sender, EventArgs e)
         {
             this.m_FormLogin.Close();
-            InitializeComponent();
+            InitializeFormGame();
             this.ShowDialog();
         }
 
-        private void InitializeComponent()
+        private void InitializeFormGame()
         {
-            // 
-            // FormGame
-            // 
             this.AutoSize = true;
             this.Name = "FormGame";
             this.ResumeLayout(false);
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
             this.StartPosition = FormStartPosition.CenterScreen;
-            InitBoard(m_FormLogin.GetNumberOfChances());
-
-
+            InitializeBoard(m_FormLogin.GetNumberOfChances());
         }
 
-        private void InitBoard(int i_NumberOfLines)
+        private void InitializeBoard(int i_NumberOfLines)
         {
+            CreateTopRow();
             Console.WriteLine(i_NumberOfLines);
             for (int i = 0; i < i_NumberOfLines; i++)
             {
@@ -66,8 +61,6 @@ namespace B17_Ex05
             }
 
             EnableButtionLine(m_GameButtons[0]);
-
-
         }
 
         private List<Button> InitLine(int i_NumberOfLine, int i_YLocation)
@@ -75,7 +68,7 @@ namespace B17_Ex05
             List<Button> buttonList = new List<Button>();
             for (int i = 0; i < k_NumberOfButtons; i++)
             {
-                Button button = InitButton(i_NumberOfLine, i);
+                Button button = InitializeButton(i_NumberOfLine, i);
                 int XLocation = k_StartXLocation + i * k_ButtonMargin;
                 button.Location = new Point(XLocation, i_YLocation);
                 Controls.Add(button);
@@ -85,7 +78,7 @@ namespace B17_Ex05
             return buttonList;
         }
 
-        private Button InitButton(int i_LineNumber, int i_ButtonNumber)
+        private Button InitializeButton(int i_LineNumber, int i_ButtonNumber)
         {
             Button button = new Button()
             {
@@ -101,23 +94,26 @@ namespace B17_Ex05
             foreach (Button button in i_ListButton)
             {
                 button.Enabled = true;
-                button.Click += new EventHandler(buttonShowColorsPanel_Click);
+                button.Click += new EventHandler(ButtonShowColorsPanel_Click);
             }
         }
 
-        private void buttonShowColorsPanel_Click(object sender, EventArgs e)
+        private void ButtonShowColorsPanel_Click(object sender, EventArgs e)
         {
             m_CurrentSelectionButton = sender as Button;
 
             foreach (KeyValuePair<Color, Button> colorButton in m_ColorsCollectionForm.Buttons)
             {
-                colorButton.Value.Click += new EventHandler(buttonSelectedColor_Click);
+                colorButton.Value.Click += new EventHandler(ButtonSelectedColor_Click);
             }
 
             m_ColorsCollectionForm.ShowDialog();
         }
 
-        private void buttonSelectedColor_Click(object sender, EventArgs e)
+        /**
+         * 
+        **/
+        private void ButtonSelectedColor_Click(object sender, EventArgs e)
         {
             m_ColorsCollectionForm.Close();
             m_CurrentSelectionButton.BackColor = (sender as Button).BackColor;
