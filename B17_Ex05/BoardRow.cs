@@ -9,7 +9,7 @@ namespace B17_Ex05
         private List<Button> m_FeedBackButtons;
         private Button m_ArrowButton;
         public List<Button> FeedBackButtons { get => m_FeedBackButtons; }
-        public Button ArrowButton { get => m_ArrowButton;}
+        public Button ArrowButton { get => m_ArrowButton; }
 
         public BoardRow(int i_YLocation) : base(i_YLocation)
         {
@@ -32,8 +32,7 @@ namespace B17_Ex05
                 }
                 else
                 {
-                    currentButton.Location = new Point(
-                        (5 * k_ButtonMargin) + ((i - 2) * k_FeedbackBtnSize + (i - 1) * k_FeedbackBtnMargin), i_HeightReference - k_FeedbackBtnSize - k_FeedbackBtnMargin);
+                    currentButton.Location = new Point((5 * k_ButtonMargin) + ((i - 2) * k_FeedbackBtnSize + (i - 1) * k_FeedbackBtnMargin), i_HeightReference + k_FeedbackBtnSize + k_FeedbackBtnMargin);
                 }
                 buttons.Add(currentButton);
             }
@@ -60,6 +59,6 @@ namespace B17_Ex05
             allButtons.AddRange(m_FeedBackButtons);
 
             return allButtons;
-        } 
+        }
     }
 }
