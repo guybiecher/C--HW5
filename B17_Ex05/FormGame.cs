@@ -32,7 +32,6 @@ namespace B17_Ex05
         private int m_CounterSelection = 0;
         private int m_CurrentLine = 0;
 
-
         public FormGame()
         {
             m_UserColorsSelection = new List<Color>();
@@ -123,7 +122,6 @@ namespace B17_Ex05
                 Button arrowButton = m_BoardRows[m_CurrentLine].ArrowButton;
                 arrowButton.Click += ButtonArrow_Click;
                 arrowButton.Enabled = true;
-
             }
 
             foreach (KeyValuePair<Color, Button> colorButton in ColorsCollectionForm.Buttons)
@@ -134,7 +132,8 @@ namespace B17_Ex05
 
         private void ButtonArrow_Click(object sender, EventArgs e)
         {
-            (sender as Button).Enabled = false;
+            Button arrowButton = sender as Button;
+            arrowButton.Enabled = false;
 
             if (UserSelection != null)
             {
@@ -151,6 +150,29 @@ namespace B17_Ex05
                 this.Controls.Add(button);
             }
             return topRow;
+        }
+
+        public void ExecuteNextStep(List<Color> i_ListResult)
+        {
+            PaintFeedbackButtons(i_ListResult);
+            m_UserColorsSelection = new List<Color>();
+            m_CurrentLine++;
+            m_CounterSelection = 0;
+            if(m_CurrentLine < m_FormLogin.GetNumberOfChances())
+            {
+                EnableButtonLine(m_BoardRows[m_CurrentLine].ChoiceButtons);
+            }
+        } 
+
+        private void PaintFeedbackButtons(List<Color> i_ListResult)
+        {
+            List<Button> currentFeedbackButtons = m_BoardRows[m_CurrentLine].FeedBackButtons;
+            int i = 0;
+            foreach(Color color in i_ListResult)
+            {
+                currentFeedbackButtons[i].BackColor = color;
+                i++;
+            }
         }
 
     }
