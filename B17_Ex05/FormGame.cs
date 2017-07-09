@@ -13,7 +13,7 @@ namespace B17_Ex05
     {
         public event UserSelection UserSelection;
         public event UserNumberOfChoices UserNumberOfChoices;
-     
+
         private const int k_NumberOfButtons = 4;
         private const int k_StartYLocation = 12;
         private const int k_RowMargin = 60;
@@ -31,11 +31,10 @@ namespace B17_Ex05
         private int m_CounterSelection = 0;
         private int m_CurrentLine = 0;
 
-
         public FormGame()
         {
             m_UserColorsSelection = new List<Color>();
-            FormLogin.ButtonStartGame.Click += new EventHandler(buttonStartGame_Click);
+            FormLogin.ButtonStartGame.Click += new EventHandler(ButtonStartGame_Click);
         }
 
         public void StartGame()
@@ -43,23 +42,20 @@ namespace B17_Ex05
             FormLogin.ShowDialog();
         }
 
-        private void buttonStartGame_Click(object sender, EventArgs e)
+        private void ButtonStartGame_Click(object sender, EventArgs e)
         {
-            this.FormLogin.Close();
+            FormLogin.Close();
             InitializeComponent();
-            this.ShowDialog();
+            ShowDialog();
         }
 
         private void InitializeComponent()
         {
-            // 
-            // FormGame
-            // 
-            this.AutoSize = true;
-            this.Name = "FormGame";
-            this.ResumeLayout(false);
-            this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            this.StartPosition = FormStartPosition.CenterScreen;
+            AutoSize = true;
+            Name = "FormGame";
+            ResumeLayout(false);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            StartPosition = FormStartPosition.CenterScreen;
 
             if (UserNumberOfChoices != null)
             {
@@ -67,8 +63,6 @@ namespace B17_Ex05
             }
 
             InitBoard(m_FormLogin.GetNumberOfChances());
-
-
         }
 
         private void InitBoard(int i_NumberOfLines)
@@ -85,7 +79,7 @@ namespace B17_Ex05
 
         private void AddRowToContolsForm(List<Button> i_LineButtons)
         {
-            foreach(Button button in i_LineButtons)
+            foreach (Button button in i_LineButtons)
             {
                 Controls.Add(button);
             }
@@ -96,22 +90,22 @@ namespace B17_Ex05
             foreach (Button button in i_ListButton)
             {
                 button.Enabled = true;
-                button.Click += new EventHandler(buttonShowColorsPanel_Click);
+                button.Click += new EventHandler(ButtonShowColorsPanel_Click);
             }
         }
 
-        private void buttonShowColorsPanel_Click(object sender, EventArgs e)
+        private void ButtonShowColorsPanel_Click(object sender, EventArgs e)
         {
             m_CurrentSelectionButton = sender as Button;
 
             foreach (KeyValuePair<Color, Button> colorButton in ColorsCollectionForm.Buttons)
             {
-                colorButton.Value.Click += new EventHandler(buttonSelectedColor_Click);
+                colorButton.Value.Click += new EventHandler(ButtonSelectedColor_Click);
             }
             ColorsCollectionForm.ShowDialog();
         }
 
-        private void buttonSelectedColor_Click(object sender, EventArgs e)
+        private void ButtonSelectedColor_Click(object sender, EventArgs e)
         {
             ColorsCollectionForm.Close();
             m_CurrentSelectionButton.Enabled = false;
@@ -123,24 +117,47 @@ namespace B17_Ex05
             if (m_CounterSelection == k_NumberOfButtons)
             {
                 Button arrowButton = m_BoardRows[m_CurrentLine].ArrowButton;
-                arrowButton.Click += buttonArrow_Click;
+                arrowButton.Click += ButtonArrow_Click;
                 arrowButton.Enabled = true;
-
             }
 
             foreach (KeyValuePair<Color, Button> colorButton in ColorsCollectionForm.Buttons)
             {
-                colorButton.Value.Click -= new EventHandler(buttonSelectedColor_Click);
+                colorButton.Value.Click -= new EventHandler(ButtonSelectedColor_Click);
             }
         }
 
-        private void buttonArrow_Click(object sender, EventArgs e)
+        private void ButtonArrow_Click(object sender, EventArgs e)
         {
-            (sender as Button).Enabled = false;
+            Button arrowButton = sender as Button;
+            arrowButton.Enabled = false;
 
             if (UserSelection != null)
             {
                 UserSelection.Invoke(m_UserColorsSelection);
+            }
+        }
+
+        public void ExecuteNextStep(List<Color> i_ListResult)
+        {
+            PaintFeedbackButtons(i_ListResult);
+            m_UserColorsSelection = new List<Color>();
+            m_CurrentLine++;
+            m_CounterSelection = 0;
+            if(m_CurrentLine < m_FormLogin.GetNumberOfChances())
+            {
+                EnableButtonLine(m_BoardRows[m_CurrentLine].ChoiceButtons);
+            }
+        } 
+
+        private void PaintFeedbackButtons(List<Color> i_ListResult)
+        {
+            List<Button> currentFeedbackButtons = m_BoardRows[m_CurrentLine].FeedBackButtons;
+            int i = 0;
+            foreach(Color color in i_ListResult)
+            {
+                currentFeedbackButtons[i].BackColor = color;
+                i++;
             }
         }
 
